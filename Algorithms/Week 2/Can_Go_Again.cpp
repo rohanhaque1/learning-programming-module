@@ -1,68 +1,69 @@
 #include <bits/stdc++.h>
-#define INF INT_MAX
+#define ll long long int
 using namespace std;
-class Edge
+class disti
 {
 public:
-    int a, b, c;
-    Edge(int a, int b, int c)
+    ll a, b, w;
+    disti(int a, int b, int w)
     {
         this->a = a;
         this->b = b;
-        this->c = c;
+        this->w = w;
     }
 };
-const int N = 1e+5;
-int dis[N];
+const ll N = 1e+5;
+ll dis[N];
 int main()
 {
-    int n, e;
+    ll n, e;
     cin >> n >> e;
-    vector<Edge> v;
+    vector<disti> v;
     while (e--)
     {
-        int a, b, c;
-        cin >> a >> b >> c;
-        v.push_back(Edge(a, b, c));
+        int a, b, w;
+        cin >> a >> b >> w;
+        v.push_back(disti(a, b, w));
     }
     for (int i = 1; i <= n; i++)
     {
-        dis[i] = INF;
+        dis[i] = 1e+18;
     }
-    int src;
+    ll src;
     cin >> src;
     dis[src] = 0;
     for (int i = 1; i <= n - 1; i++)
     {
-        for (Edge ed : v)
+        for (disti ed : v)
         {
             int a, b, w;
             a = ed.a;
             b = ed.b;
-            w = ed.c;
-            if (dis[a] < INF && dis[a] + w < dis[b])
+            w = ed.w;
+            if (dis[a] < 1e+18 && dis[a] + w < dis[b])
             {
                 dis[b] = dis[a] + w;
             }
         }
     }
     bool flag = false;
-    for (Edge ed : v)
+    for (disti ed : v)
     {
         int a, b, w;
         a = ed.a;
         b = ed.b;
-        w = ed.c;
-        if (dis[a] < INF && dis[a] + w < dis[b])
+        w = ed.w;
+        if (dis[a] < INT_MAX && dis[a] + w < dis[b])
         {
             flag = true;
             break;
         }
     }
-    int t;
+    ll t;
     cin >> t;
     while (t--)
     {
+
         int D;
         cin >> D;
         if (flag)
@@ -72,10 +73,15 @@ int main()
         }
         else
         {
-            if (dis[D] == INF)
+
+            if (dis[D] == 1e+18)
+            {
                 cout << "Not Possible" << endl;
+            }
             else
+            {
                 cout << dis[D] << endl;
+            }
         }
     }
     return 0;
